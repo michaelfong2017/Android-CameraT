@@ -49,10 +49,13 @@ class MainViewModel @Inject constructor(
     private val webRtcEngine: WebRtcEngine
 ) : ViewModel(), IMainViewModel {
 
-
     private val _userIntent = Channel<MainViewAction>(Channel.UNLIMITED)
     private val _sharedFlow: SharedFlow<MainViewState> = handleAction()
     override val viewState: LiveData<MainViewState> = _sharedFlow.asLiveData()
+
+    fun stopCall() {
+        webRtcEngine.stopCall()
+    }
 
     private fun handleAction() =
         _userIntent.receiveAsFlow().map {
@@ -78,6 +81,9 @@ class MainViewModel @Inject constructor(
                     surfaceView?.let {
                         if (it is SurfaceView) {
                             it.setZOrderMediaOverlay(true)
+
+                            webRtcEngine.makeCall()
+
                             state.copy(localSurfaceView = it)
                         } else {
                             state.copy()

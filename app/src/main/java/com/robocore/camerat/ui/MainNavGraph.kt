@@ -22,6 +22,6 @@ fun MainNavGraph(
         startDestination = startDestination
     ) {
         composable(MainNavDestination.HOME) { Home(navController = navController) }
-        composable(MainNavDestination.CAMERA_VIEW) { CameraView(viewModel = hiltViewModel<MainViewModel>()) }
+        composable(MainNavDestination.CAMERA_VIEW) { CameraView(viewModel = hiltViewModel<MainViewModel>(), navController = navController) }
     }
 }

@@ -79,6 +79,9 @@ dependencies {
 
     // Insets
     implementation "com.google.accompanist:accompanist-insets:0.15.0"
+
+    // Okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 }
 
 // Allow references to generated code

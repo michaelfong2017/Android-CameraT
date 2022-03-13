@@ -20,11 +20,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.robocore.camerat.*
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun CameraView(viewModel: IMainViewModel = hiltViewModel()) {
+fun CameraView(viewModel: IMainViewModel = hiltViewModel(), navController: NavHostController) {
     var init by remember {
         mutableStateOf(true)
     }
@@ -44,6 +46,15 @@ fun CameraView(viewModel: IMainViewModel = hiltViewModel()) {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             )
+            if (activity is ComponentActivity) {
+                activity.onBackPressedDispatcher.addCallback(lifecycleOwner) {
+                    if (viewModel is MainViewModel) {
+                        viewModel.stopCall()
+                    }
+                    navController.navigate(MainNavDestination.HOME)
+                    isEnabled = true
+                }
+            }
         }
     }
 
@@ -68,7 +79,7 @@ fun CameraView(viewModel: IMainViewModel = hiltViewModel()) {
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = "You need to request permission"
+                text = "You need to request for permissions"
             )
         }
     }
@@ -114,7 +125,7 @@ private fun handlePermissionResult(viewModel: IMainViewModel, map: Map<String, B
 @Preview(widthDp = 1280, heightDp = 800)
 @Composable
 fun CameraViewPreview() {
-    CameraView(viewModel = MainViewModelPreview())
+    CameraView(viewModel = MainViewModelPreview(), navController = rememberNavController())
 }
 
 class MainViewModelPreview : IMainViewModel {
