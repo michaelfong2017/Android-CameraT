@@ -11,13 +11,13 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONObject
+import org.json.JSONTokener
 import org.webrtc.*
 import org.webrtc.audio.AudioDeviceModule
 import org.webrtc.audio.JavaAudioDeviceModule
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import org.json.JSONTokener
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -51,6 +51,15 @@ class WebRtcEngine @Inject constructor(@ApplicationContext private val context: 
     private var _localSdp: SessionDescription? = null
     private var _remoteSdp: SessionDescription? = null
     private var _pcId: String? = null
+
+    /** Remote stream */
+    private var _remoteStream: MediaStream? = null
+    /** Remote stream END */
+
+    private var mainViewModel: MainViewModel? = null
+    fun setMainViewModel(mainViewModel: MainViewModel) {
+        this.mainViewModel = mainViewModel
+    }
 
     init {
         /***/
@@ -147,15 +156,18 @@ class WebRtcEngine @Inject constructor(@ApplicationContext private val context: 
             _localRenderer = SurfaceViewRenderer(context)
             _localRenderer?.init(_eglBaseContext, null)
             _localRenderer?.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
-            _localRenderer?.setMirror(true)
+            _localRenderer?.setMirror(false)
             _localRenderer?.setZOrderMediaOverlay(isOverlay)
             _localSink = ProxyVideoSink()
             _localSink?.let {
                 it.target = _localRenderer
             }
-            _localStream?.let {
+            _remoteStream?.let {
                 if (it.videoTracks.size > 0) {
                     it.videoTracks[0].addSink(_localSink)
+                }
+                if (it.audioTracks.size > 0) {
+                    it.audioTracks[0].setEnabled(false)
                 }
             }
             return _localRenderer
@@ -385,6 +397,13 @@ class WebRtcEngine @Inject constructor(@ApplicationContext private val context: 
 
     override fun onAddStream(p0: MediaStream?) {
         Log.i("Observer", "onAddStream")
+        _remoteStream = p0
+        mainViewModel?.sendAction(
+            MainViewAction(
+                MainViewAction.MainViewActionValue.CREATE_REMOTE,
+                mapOf()
+            )
+        )
     }
 
     override fun onRemoveStream(p0: MediaStream?) {

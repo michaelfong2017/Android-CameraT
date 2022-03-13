@@ -25,8 +25,7 @@ data class MainViewAction(
 ) {
     enum class MainViewActionValue {
         CHANGE_PERMISSION,
-        CREATE_LOCAL,
-        INIT_CALL,
+        MAKE_CALL,
         CREATE_REMOTE,
     }
 
@@ -73,7 +72,12 @@ class MainViewModel @Inject constructor(
                     state.copy(havePermission = false)
                 }
             }
-            MainViewAction.MainViewActionValue.CREATE_LOCAL -> {
+            MainViewAction.MainViewActionValue.MAKE_CALL -> {
+                webRtcEngine.makeCall()
+                webRtcEngine.setMainViewModel(this)
+                state.copy()
+            }
+            MainViewAction.MainViewActionValue.CREATE_REMOTE -> {
                 if (state.localSurfaceView == null) {
                     val surfaceView: View? =
                         webRtcEngine.startPreview(false)
@@ -81,8 +85,6 @@ class MainViewModel @Inject constructor(
                     surfaceView?.let {
                         if (it is SurfaceView) {
                             it.setZOrderMediaOverlay(true)
-
-                            webRtcEngine.makeCall()
 
                             state.copy(localSurfaceView = it)
                         } else {

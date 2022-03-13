@@ -67,7 +67,7 @@ fun CameraView(viewModel: IMainViewModel = hiltViewModel(), navController: NavHo
         if (viewState.havePermission) {
             viewModel.sendAction(
                 MainViewAction(
-                    MainViewAction.MainViewActionValue.CREATE_LOCAL,
+                    MainViewAction.MainViewActionValue.MAKE_CALL,
                     mapOf()
                 )
             )
