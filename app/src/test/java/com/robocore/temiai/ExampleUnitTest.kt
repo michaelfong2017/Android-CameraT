@@ -1,4 +1,4 @@
-package com.robocore.camerat
+package com.robocore.temiai
 
 import org.junit.Test
 

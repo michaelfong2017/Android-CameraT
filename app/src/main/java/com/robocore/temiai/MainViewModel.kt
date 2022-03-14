@@ -1,4 +1,4 @@
-package com.robocore.camerat
+package com.robocore.temiai
 
 import android.view.SurfaceView
 import android.view.View

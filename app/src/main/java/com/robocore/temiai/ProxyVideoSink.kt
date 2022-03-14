@@ -1,4 +1,4 @@
-package com.robocore.camerat
+package com.robocore.temiai
 
 import org.webrtc.Logging
 import org.webrtc.VideoFrame

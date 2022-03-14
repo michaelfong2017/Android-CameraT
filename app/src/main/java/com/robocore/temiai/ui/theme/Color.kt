@@ -1,4 +1,4 @@
-package com.robocore.camerat.ui.theme
+package com.robocore.temiai.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

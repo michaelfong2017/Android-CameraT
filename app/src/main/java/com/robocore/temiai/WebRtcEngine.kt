@@ -1,4 +1,4 @@
-package com.robocore.camerat
+package com.robocore.temiai
 
 import android.content.Context
 import android.util.Log

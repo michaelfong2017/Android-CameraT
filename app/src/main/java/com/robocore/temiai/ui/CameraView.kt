@@ -1,4 +1,4 @@
-package com.robocore.camerat.ui
+package com.robocore.temiai.ui
 
 import android.Manifest
 import android.view.ViewGroup
@@ -22,7 +22,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.robocore.camerat.*
+import com.robocore.temiai.*
 import kotlinx.coroutines.CoroutineScope
 
 @Composable

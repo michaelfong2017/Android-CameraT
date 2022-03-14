@@ -1,11 +1,11 @@
-package com.robocore.camerat.ui
+package com.robocore.temiai.ui
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.robocore.camerat.MainViewModel
+import com.robocore.temiai.MainViewModel
 
 object MainNavDestination {
     const val CAMERA_VIEW = "camera_view"

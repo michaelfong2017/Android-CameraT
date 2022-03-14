@@ -1,4 +1,4 @@
-package com.robocore.camerat
+package com.robocore.temiai
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
